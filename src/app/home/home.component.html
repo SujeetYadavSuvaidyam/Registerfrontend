@@ -1,0 +1,64 @@
+<div class="main">
+  <div class="header">
+    <ul class="ul">
+      <p routerLink="/createpost">CreatePost</p>
+      <p>About</p>
+      <p>Service</p>
+    </ul>
+    <div>
+      <button class="btn" routerLink="/" (click)="logout()"> <mat-icon aria-hidden="false"
+          aria-label="Example home icon" fontIcon="logout"></mat-icon></button>
+    </div>
+  </div>
+  <div class="table">
+    <div class="mat-elevation-z8">
+      <table mat-table matSort [dataSource]="dataSource">
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+        <!-- description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="date">
+          <th mat-header-cell  *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+        </ng-container> -->
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef> Update </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="editData(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef> Delete </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="deleteData(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </div>
+
+
+  </div>
+
+</div>

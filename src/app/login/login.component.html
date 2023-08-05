@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+    <span>Welcome To My Login Page</span>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-card-content>
+    <form class="example-form" [formGroup]="loginform" (ngSubmit)="proceedlogin()">
+        <mat-card class="mat-card">
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput formControlName="email" placeholder="Enter your email" value="">
+                
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password" placeholder="Enter your password" value="">
+            </mat-form-field>
+
+            <div>
+                <mat-radio-group aria-label="Gender" formControlName="gender">
+                    <mat-radio-button value="male">Male</mat-radio-button>
+                    <mat-radio-button value="female">Female</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div>
+                <button mat-raised-button color="primary">Submit</button>
+                <button routerLink="/register" mat-raised-button color="accent">Register Now</button>
+            </div>
+        </mat-card>
+
+    </form>
+    <mat-card-content>

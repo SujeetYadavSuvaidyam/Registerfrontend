@@ -1,0 +1,25 @@
+<mat-toolbar color="accent">
+    <span>Welcome To My Blog Page</span>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<form class="example-form" [formGroup]="postblog" (ngSubmit)="proceedBlog()">
+    <mat-card class="mat-card">
+        <mat-form-field class="example-full-width">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="title" value="" formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="primary">{{actionbtn}}</button>
+            <!-- <button mat-raised-button mat-dialog-close color="primary">Blog Post</button> -->
+
+        </div>
+    </mat-card>
+</form>
