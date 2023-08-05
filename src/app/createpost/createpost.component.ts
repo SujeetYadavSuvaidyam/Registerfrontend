@@ -1,20 +1,23 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { BlogService, Iblog } from '../service/blog.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-createpost',
   templateUrl: './createpost.component.html',
   styleUrls: ['./createpost.component.css']
 })
-export class CreatepostComponent {
+export class CreatepostComponent implements OnInit {
+  [x: string]: any;
   constructor(private httpblog: BlogService,
     private builder: FormBuilder, private toastr: ToastrService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public editData: Iblog, private toast: ToastrService, private dialog: MatDialogRef<CreatepostComponent>) { }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: Iblog,
+    private toast: ToastrService,@Optional() private dialogRef: MatDialogRef<CreatepostComponent>) { }
 
   actionbtn: string = 'Post Blog'
   receivedData: any;
@@ -24,13 +27,14 @@ export class CreatepostComponent {
     description: this.builder.control('', Validators.compose([Validators.required])),
   });
   ngOnInit() {
-    
-    console.log(this.editData)
+    // this.receivedData = this.route.snapshot.paramMap.get('data');
+    // console.log(this.receivedData)
+    console.log(this.data)
     this.updatesetValue()
-    
+
   }
   proceedBlog() {
-    if (!this.editData) {
+    if (!this.data) {
       if (this.postblog.valid) {
         this.httpblog.postBlog(this.postblog.value as Iblog).subscribe((res) => {
           console.log(res)
@@ -47,17 +51,20 @@ export class CreatepostComponent {
   }
 
   updatesetValue() {
-    if (this.editData) {
+    if (this.data) {
       this.actionbtn = 'UpdatePost'
-      this.postblog.controls.title.setValue(this.editData.title)
-      this.postblog.controls.description.setValue(this.editData.description)
+      this.postblog.controls.title.setValue(this.data.title)
+      this.postblog.controls.description.setValue(this.data.description)
     }
+    // this.postblog.patchValue(this.data)
+
   }
 
   updateBlogdata() {
-    this.httpblog.updateData(this.editData.id as unknown  as Iblog, this.postblog.value as Iblog,).subscribe((res) => {
+    this.httpblog.updateData(this.data.id as unknown as Iblog, this.postblog.value as Iblog,).subscribe((res) => {
       console.log(res)
-      this.dialog.close()
+      this.toastr.success('Updated successfully')
+      this.dialogRef.close(true)
     })
   }
 }
